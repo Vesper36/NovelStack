@@ -1,26 +1,306 @@
 @import "tailwindcss";
 
+/* ========== 主题系统 CSS Variables ========== */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* 默认主题（浅色） */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #94a3b8;
+  --accent: #6366f1;
+  --accent-light: #818cf8;
+  --accent-dark: #4f46e5;
+  --border: #e2e8f0;
+  --shadow: rgba(0, 0, 0, 0.1);
+
+  /* 字体 */
+  --font-serif: var(--font-serif, 'Noto Serif SC', 'Source Han Serif SC', serif);
+  --font-sans: var(--font-sans, 'Noto Sans SC', 'Source Han Sans SC', sans-serif);
+  --font-mono: var(--font-mono, 'JetBrains Mono', 'Fira Code', monospace);
+
+  /* 阅读排版 */
+  --reading-font-size: 16px;
+  --reading-line-height: 1.75;
+  --reading-max-width: 65ch;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-primary);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-accent-dark: var(--accent-dark);
+  --color-border: var(--border);
+  --color-surface: var(--bg-secondary);
+  --color-muted: var(--text-tertiary);
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ========== 主题变量 ========== */
+[data-theme="midnight"] {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #64748b;
+  --accent: #818cf8;
+  --accent-light: #a5b4fc;
+  --accent-dark: #6366f1;
+  --border: #334155;
+  --shadow: rgba(0, 0, 0, 0.3);
 }
 
+[data-theme="paper"] {
+  --bg-primary: #faf3e0;
+  --bg-secondary: #f5e6c8;
+  --bg-tertiary: #efe0b0;
+  --text-primary: #3e2723;
+  --text-secondary: #5d4037;
+  --text-tertiary: #8d6e63;
+  --accent: #c62828;
+  --accent-light: #e53935;
+  --accent-dark: #b71c1c;
+  --border: #d7ccc8;
+  --shadow: rgba(62, 39, 35, 0.1);
+}
+
+[data-theme="cyberpunk"] {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #12121a;
+  --bg-tertiary: #1a1a25;
+  --text-primary: #00ff9d;
+  --text-secondary: #00cc7a;
+  --text-tertiary: #009966;
+  --accent: #ff00ff;
+  --accent-light: #ff66ff;
+  --accent-dark: #cc00cc;
+  --border: rgba(0, 255, 157, 0.2);
+  --shadow: rgba(0, 255, 157, 0.1);
+}
+
+[data-theme="forest"] {
+  --bg-primary: #f0fdf4;
+  --bg-secondary: #dcfce7;
+  --bg-tertiary: #bbf7d0;
+  --text-primary: #14532d;
+  --text-secondary: #166534;
+  --text-tertiary: #22c55e;
+  --accent: #059669;
+  --accent-light: #10b981;
+  --accent-dark: #047857;
+  --border: #86efac;
+  --shadow: rgba(5, 150, 105, 0.1);
+}
+
+[data-theme="ocean"] {
+  --bg-primary: #f0f9ff;
+  --bg-secondary: #e0f2fe;
+  --bg-tertiary: #bae6fd;
+  --text-primary: #0c4a6e;
+  --text-secondary: #0369a1;
+  --text-tertiary: #0ea5e9;
+  --accent: #0284c7;
+  --accent-light: #38bdf8;
+  --accent-dark: #0369a1;
+  --border: #7dd3fc;
+  --shadow: rgba(2, 132, 199, 0.1);
+}
+
+/* ========== 全局样式 ========== */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 流体排版 */
+.fluid-text {
+  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
+  line-height: var(--reading-line-height);
+}
+
+/* 阅读区域 */
+.reading-content {
+  max-width: var(--reading-max-width);
+  margin: 0 auto;
+  font-family: var(--font-serif);
+  font-size: var(--reading-font-size);
+  line-height: var(--reading-line-height);
+}
+
+.reading-content h1 {
+  font-size: 2em;
+  font-weight: 700;
+  margin: 2em 0 1em;
+  color: var(--text-primary);
+}
+
+.reading-content h2 {
+  font-size: 1.5em;
+  font-weight: 600;
+  margin: 1.5em 0 0.75em;
+  color: var(--text-primary);
+}
+
+.reading-content h3 {
+  font-size: 1.25em;
+  font-weight: 600;
+  margin: 1.25em 0 0.5em;
+}
+
+.reading-content p {
+  margin: 1em 0;
+  text-indent: 2em;
+}
+
+.reading-content blockquote {
+  border-left: 3px solid var(--accent);
+  padding: 0.5em 1em;
+  margin: 1em 0;
+  background: var(--bg-secondary);
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  text-indent: 0;
+}
+
+.reading-content pre {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1em;
+  overflow-x: auto;
+  margin: 1em 0;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  text-indent: 0;
+}
+
+.reading-content code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--bg-tertiary);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+}
+
+.reading-content pre code {
+  background: none;
+  padding: 0;
+}
+
+.reading-content hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2em 0;
+}
+
+.reading-content em {
+  font-style: italic;
+}
+
+.reading-content strong {
+  font-weight: 600;
+}
+
+.reading-content a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.reading-content a:hover {
+  color: var(--accent-dark);
+}
+
+/* ========== 骨架屏 ========== */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--bg-tertiary) 50%, var(--bg-secondary) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+/* ========== 阅读进度条 ========== */
+.reading-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-light));
+  transition: width 0.1s linear;
+  z-index: 100;
+}
+
+/* ========== 滚动条 ========== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-tertiary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* ========== 选择高亮 ========== */
+::selection {
+  background: var(--accent);
+  color: white;
+}
+
+/* ========== 焦点可见性 ========== */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ========== 内容警告遮罩 ========== */
+.content-warning-blur {
+  filter: blur(8px);
+  user-select: none;
+  pointer-events: none;
+  transition: filter 0.3s ease;
+}
+
+.content-warning-blur.revealed {
+  filter: none;
+  user-select: auto;
+  pointer-events: auto;
+}
+
+/* ========== 标签云 ========== */
+.tag-cloud-item {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25em 0.75em;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.tag-cloud-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--shadow);
 }
