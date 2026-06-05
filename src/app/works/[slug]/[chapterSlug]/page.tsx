@@ -55,7 +55,7 @@ export default async function ChapterReadPage({
           contentHtml={contentHtml}
           toc={toc}
           workSlug={slug}
-          workTitle={chapter.workTitle}
+          workTitle={chapter.workTitle ?? ''}
           prevChapter={prev}
           nextChapter={next}
         />
