@@ -64,6 +64,10 @@ export async function getPublishedWorks(options?: {
 
   return result.map(w => ({
     ...w,
+    wordCount: w.wordCount ?? 0,
+    viewCount: w.viewCount ?? 0,
+    favoriteCount: w.favoriteCount ?? 0,
+    rating: w.rating ?? 'general',
     tags: tagMap.get(w.id) || [],
   }));
 }
