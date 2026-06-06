@@ -29,11 +29,11 @@ GET /api/search?q=关键词&limit=20
 
 ## Meilisearch 配置
 
-Meilisearch 服务运行在端口 **50042**：
+Meilisearch 服务运行在端口 **51639**：
 
 ```env
-MEILI_PORT=50042
-MEILI_HOST=http://localhost:50042
+MEILI_PORT=51639
+MEILI_HOST=http://localhost:51639
 MEILI_API_KEY=
 ```
 

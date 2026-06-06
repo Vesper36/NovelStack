@@ -33,16 +33,16 @@ cp .env.example .env.local
 
 ```env
 # 前端端口
-FRONTEND_PORT=50040
-NEXT_PUBLIC_SITE_URL=http://localhost:50040
+FRONTEND_PORT=51637
+NEXT_PUBLIC_SITE_URL=http://localhost:51637
 
 # 后端 API 端口 (FastAPI)
-BACKEND_PORT=50041
-BACKEND_URL=http://localhost:50041
+BACKEND_PORT=51638
+BACKEND_URL=http://localhost:51638
 
 # Meilisearch 端口
-MEILI_PORT=50042
-MEILI_HOST=http://localhost:50042
+MEILI_PORT=51639
+MEILI_HOST=http://localhost:51639
 MEILI_API_KEY=
 
 # 数据库
@@ -55,13 +55,13 @@ DATABASE_URL=file:./data/inkweave.db
 npm run dev
 ```
 
-访问 `http://localhost:50040` 即可看到应用。
+访问 `http://localhost:51637` 即可看到应用。
 
 ## 可用脚本
 
 | 命令 | 说明 |
 |------|------|
-| `npm run dev` | 启动开发服务器 (端口 50040) |
+| `npm run dev` | 启动开发服务器 (端口 51637) |
 | `npm run build` | 构建生产版本 |
 | `npm run start` | 启动生产服务器 |
 | `npm run lint` | 运行 ESLint 检查 |
@@ -70,9 +70,9 @@ npm run dev
 
 | 服务 | 默认端口 | 说明 |
 |------|----------|------|
-| 前端 (Next.js) | 50040 | 主应用入口 |
-| 后端 API (FastAPI) | 50041 | REST API 服务 |
-| Meilisearch | 50042 | 搜索引擎 |
+| 前端 (Next.js) | 51637 | 主应用入口 |
+| 后端 API (FastAPI) | 51638 | REST API 服务 |
+| Meilisearch | 51639 | 搜索引擎 |
 
 ## 故障排除
 
@@ -80,7 +80,7 @@ npm run dev
 
 ```bash
 # 查看端口占用
-lsof -i :50040
+lsof -i :51637
 
 # 杀掉占用进程
 kill -9 <PID>

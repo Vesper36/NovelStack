@@ -82,7 +82,7 @@ npm run db:push
 npm run dev
 ```
 
-访问 `http://localhost:50040` 即可。
+访问 `http://localhost:51637` 即可。
 
 ### 构建生产版本
 
@@ -97,9 +97,9 @@ npm run start
 
 | 服务 | 端口 | 说明 |
 |------|------|------|
-| 前端 (Next.js) | 50040 | 主应用 |
-| 后端 API (FastAPI) | 50041 | REST API |
-| Meilisearch | 50042 | 搜索引擎 |
+| 前端 (Next.js) | 51637 | 主应用 |
+| 后端 API (FastAPI) | 51638 | REST API |
+| Meilisearch | 51639 | 搜索引擎 |
 
 ### 使用 PM2 部署
 
@@ -125,7 +125,7 @@ server {
     server_name your-domain.com;
 
     location / {
-        proxy_pass http://127.0.0.1:50040;
+        proxy_pass http://127.0.0.1:51637;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';

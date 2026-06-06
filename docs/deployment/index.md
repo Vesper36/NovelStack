@@ -28,9 +28,9 @@ Docker Compose 配置正在开发中。
 
 | 服务 | 端口 | 说明 |
 |------|------|------|
-| 前端 (Next.js) | 50040 | 主应用入口 |
-| 后端 API (FastAPI) | 50041 | REST API 服务 |
-| Meilisearch | 50042 | 搜索引擎 |
+| 前端 (Next.js) | 51637 | 主应用入口 |
+| 后端 API (FastAPI) | 51638 | REST API 服务 |
+| Meilisearch | 51639 | 搜索引擎 |
 | 文档站 (VitePress) | 40004 | 项目文档 |
 
 ## 域名配置
