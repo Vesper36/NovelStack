@@ -36,9 +36,6 @@ yarn-error.log*
 # database
 /data/
 
-# deployment
-ecosystem.config.cjs
-
 # vercel
 .vercel
 
