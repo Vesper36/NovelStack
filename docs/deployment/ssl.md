@@ -57,7 +57,7 @@ server {
     add_header Strict-Transport-Security "max-age=63072000" always;
 
     location / {
-        proxy_pass http://127.0.0.1:51637;
+        proxy_pass http://127.0.0.1:50040;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";

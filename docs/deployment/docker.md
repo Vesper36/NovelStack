@@ -9,7 +9,7 @@ Docker Compose 配置正在开发中，敬请期待。
 ```yaml
 # docker-compose.yml (即将推出)
 services:
-  nextjs:    # 前端 (51637)
+  nextjs:    # 前端 (50040)
   fastapi:   # 后端 API (51638)
   meili:     # 搜索引擎 (51639)
 ```

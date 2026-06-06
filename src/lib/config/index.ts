@@ -3,7 +3,7 @@ export const siteConfig = {
   name: 'InkWeave',
   title: 'InkWeave - 墨织 | 为创作者而生的叙事平台',
   description: '一个面向创作者与读者的结构化叙事平台，为长篇连载、同人衍生、互动实验型文本提供容器级支持。',
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:51637',
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:50040',
   ogImage: '/og-image.png',
   creator: '@inkweave',
   keywords: ['同人', '小说', '创作', '连载', '文学', 'fanfiction', 'writing'],
@@ -11,7 +11,7 @@ export const siteConfig = {
 
 // 服务端口配置
 export const ports = {
-  frontend: Number(process.env.FRONTEND_PORT) || 51637,
+  frontend: Number(process.env.FRONTEND_PORT) || 50040,
   backend: Number(process.env.BACKEND_PORT) || 51638,
   meilisearch: Number(process.env.MEILI_PORT) || 51639,
 };

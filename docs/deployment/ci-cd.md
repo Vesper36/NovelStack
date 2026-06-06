@@ -75,7 +75,7 @@ pm2 restart novelstack
 |------|------|
 | 查看进程状态 | `pm2 status` |
 | 查看应用日志 | `pm2 logs novelstack` |
-| 测试应用 | `curl -s -o /dev/null -w "%{http_code}" http://localhost:51637/` |
+| 测试应用 | `curl -s -o /dev/null -w "%{http_code}" http://localhost:50040/` |
 | 测试文档站 | `curl -s -o /dev/null -w "%{http_code}" http://localhost:40004/` |
 | Nginx 测试 | `nginx -t` |
 

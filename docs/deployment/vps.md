@@ -59,7 +59,7 @@ cat > .env.local << 'EOF'
 # NovelStack Production Environment
 
 # 前端端口
-FRONTEND_PORT=51637
+FRONTEND_PORT=50040
 NEXT_PUBLIC_SITE_URL=https://your-domain.com
 
 # 后端 API 端口 (FastAPI)
@@ -100,7 +100,7 @@ pm2 save
 
 # 验证运行状态
 pm2 status
-curl -s -o /dev/null -w "%{http_code}" http://localhost:51637/
+curl -s -o /dev/null -w "%{http_code}" http://localhost:50040/
 # 应返回 200
 ```
 
@@ -113,7 +113,7 @@ server {
     server_name your-domain.com;
 
     location / {
-        proxy_pass http://127.0.0.1:51637;
+        proxy_pass http://127.0.0.1:50040;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
@@ -203,7 +203,7 @@ chmod +x /opt/NovelStack/deploy.sh
 pm2 logs novelstack --lines 50
 
 # 检查端口占用
-lsof -i :51637
+lsof -i :50040
 ```
 
 ### 502 Bad Gateway
@@ -213,7 +213,7 @@ lsof -i :51637
 pm2 status
 
 # 检查端口是否监听
-ss -tlnp | grep 51637
+ss -tlnp | grep 50040
 
 # 检查 Nginx 配置
 nginx -t

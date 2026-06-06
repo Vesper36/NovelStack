@@ -10,7 +10,7 @@ server {
     server_name your-domain.com;
 
     location / {
-        proxy_pass http://127.0.0.1:51637;
+        proxy_pass http://127.0.0.1:50040;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
@@ -30,7 +30,7 @@ server {
 ```nginx
 # Next.js 构建产物 - 长期缓存
 location /_next/ {
-    proxy_pass http://127.0.0.1:51637;
+    proxy_pass http://127.0.0.1:50040;
     proxy_set_header Host $host;
     expires 365d;
     add_header Cache-Control "public, immutable";
@@ -38,7 +38,7 @@ location /_next/ {
 
 # 公共静态资源 - 短期缓存
 location /static/ {
-    proxy_pass http://127.0.0.1:51637;
+    proxy_pass http://127.0.0.1:50040;
     proxy_set_header Host $host;
     expires 7d;
     add_header Cache-Control "public";
@@ -51,7 +51,7 @@ Next.js 开发模式的 HMR 需要 WebSocket：
 
 ```nginx
 location /_next/webpack-hmr {
-    proxy_pass http://127.0.0.1:51637;
+    proxy_pass http://127.0.0.1:50040;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
@@ -64,7 +64,7 @@ location /_next/webpack-hmr {
 # Demo 演示站
 server {
     server_name novelstack.demo.vesper36.cc;
-    location / { proxy_pass http://127.0.0.1:51637; }
+    location / { proxy_pass http://127.0.0.1:50040; }
 }
 
 # 文档站
