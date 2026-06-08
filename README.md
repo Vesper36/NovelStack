@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="public/logo.svg" alt="NovelStack Logo" width="120" height="120">
+  <img src="public/logo.svg" alt="InkWeave Logo" width="120" height="120">
 </p>
 
-<h1 align="center">NovelStack</h1>
+<h1 align="center">InkWeave</h1>
 
 <p align="center">
-  <strong>为创作者而生的叙事平台</strong>
+  <strong>墨织 -- 为创作者而生的叙事平台</strong>
 </p>
 
 <p align="center">
@@ -17,8 +17,7 @@
   <a href="#demo">在线演示</a> &bull;
   <a href="#quick-start">快速开始</a> &bull;
   <a href="#deployment">部署指南</a> &bull;
-  <a href="#tech-stack">技术栈</a> &bull;
-  <a href="#license">许可协议</a>
+  <a href="#tech-stack">技术栈</a>
 </p>
 
 ---
@@ -26,46 +25,49 @@
 ## Features
 
 ### 创作工具
-- **多作品管理** - 一站式管理你的所有创作
-- **章节编辑器** - 支持 Markdown 的沉浸式写作环境
-- **自动保存** - 每 30 秒自动保存草稿，告别丢稿烦恼
-- **作品信息管理** - 标题、简介、封面、标签、分级等完整元数据
+- **多作品管理** - 一站式管理所有创作，支持草稿/审核/发布/归档状态流转
+- **CodeMirror 编辑器** - 基于 CodeMirror 6 的 MDX 编辑器，语法高亮、行号、活动行标记
+- **双轨草稿系统** - 本地 IndexedDB + 云端版本快照，双保险不丢稿
+- **自动保存** - 每 30 秒自动保存到云端，编辑中实时保存到本地
+- **卷章结构** - 作品 > 卷 > 章节三级管理
+- **侧边预览** - 编辑器右侧实时 HTML 预览面板
 
 ### 阅读体验
 - **自定义阅读设置** - 字体大小、行高、阅读宽度自由调节
-- **多主题切换** - 默认、深夜、羊皮纸、赛博朋克、森林、海洋六款主题
-- **阅读进度追踪** - 自动记录阅读位置
-- **阅读时长估算** - 智能计算剩余阅读时间
+- **六款主题** - 默认、深夜、羊皮纸、赛博朋克、森林、海洋
+- **滚动进度条** - 顶部实时显示阅读进度
+- **智能工具栏** - 向下滚动自动隐藏，向上滚动自动显示
+- **章节目录** - 从标题结构自动生成，桌面侧边栏 + 移动端底栏
+- **键盘导航** - 左右箭头切换章节，T 键切换主题
 
-### 搜索与发现
-- **全文搜索** - 基于 Meilisearch 的高性能搜索
-- **标签系统** - 题材、类型、配对、状态多维分类
-- **内容分级** - 全年龄 / 青少年 / 成人 / 限制级四级分类
+### 用户与权限
+- **JWT 认证** - 基于 jose 库，httpOnly Cookie，bcrypt 密码加密
+- **五级角色** - 读者、作者、编辑、管理员、超级管理员
+- **RBAC 权限** - 完整的角色-权限矩阵
 
 ### 技术特性
-- **响应式设计** - 完美适配桌面端与移动端
-- **暗色模式** - 原生暗色主题支持
-- **SSR/SSG** - Next.js 驱动的服务端渲染，SEO 友好
+- **SSR/SSG** - Next.js 16 服务端渲染，SEO 友好
 - **类型安全** - TypeScript + Zod 全链路类型保障
+- **OpenGraph + JSON-LD** - 自动注入 SEO 元数据
+- **响应式设计** - 桌面端与移动端完美适配
 
 ## Demo
 
-在线体验: [novelstack.demo.vesper36.cc](https://novelstack.demo.vesper36.cc)
-
-项目文档: [novelstack.docs.vesper36.cc](https://novelstack.docs.vesper36.cc)
+- 在线体验: [novelstack.demo.vesper36.cc](https://novelstack.demo.vesper36.cc)
+- 项目文档: [lobeam.docs.vesper36.cc](https://lobeam.docs.vesper36.cc)
 
 ## Quick Start
 
 ### 环境要求
 
-- Node.js >= 18
+- Node.js >= 20.9.0
 - npm >= 9
 
 ### 安装
 
 ```bash
 # 克隆仓库
-git clone https://github.com/vesper817/NovelStack.git
+git clone https://github.com/Vesper36/NovelStack.git
 cd NovelStack
 
 # 安装依赖
@@ -73,7 +75,6 @@ npm install
 
 # 配置环境变量
 cp .env.example .env.local
-# 编辑 .env.local 填入你的配置
 
 # 初始化数据库
 npm run db:push
@@ -84,63 +85,37 @@ npm run dev
 
 访问 `http://localhost:50040` 即可。
 
-### 构建生产版本
+### 可用脚本
 
-```bash
-npm run build
-npm run start
-```
+| 命令 | 说明 |
+|------|------|
+| `npm run dev` | 启动开发服务器 (端口 50040) |
+| `npm run build` | 构建生产版本 |
+| `npm run start` | 启动生产服务器 (端口 50040) |
+| `npm run lint` | 运行 ESLint 检查 |
+| `npm run db:push` | 推送数据库 schema 变更 |
+| `npm run db:studio` | 启动 Drizzle Studio 数据库管理 |
 
 ## Deployment
 
 ### 端口规划
 
-| 服务 | 端口 | 说明 |
-|------|------|------|
-| 前端 (Next.js) | 50040 | 主应用 |
-| 后端 API (FastAPI) | 51638 | REST API |
-| Meilisearch | 51639 | 搜索引擎 |
+| 服务 | 端口 | PM2 进程 | 说明 |
+|------|------|----------|------|
+| 前端 (Next.js) | 50040 | inkweave | 主应用 |
+| 文档站 (VitePress) | 40004 | novelstack-docs | 项目文档 |
+| Webhook | 51640 | novelstack-webhook | 自动部署 |
 
-### 使用 PM2 部署
+### 快速部署
 
 ```bash
-# 安装 PM2
-npm install -g pm2
-
-# 构建
-npm run build
-
-# 使用项目配置启动
+# 使用 PM2 启动
 pm2 start ecosystem.config.cjs
-
-# 保存进程列表（开机自启）
 pm2 save
 pm2 startup
 ```
 
-### Nginx 反向代理
-
-```nginx
-server {
-    server_name your-domain.com;
-
-    location / {
-        proxy_pass http://127.0.0.1:50040;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_cache_bypass $http_upgrade;
-    }
-}
-```
-
-### Docker (即将支持)
-
-Docker Compose 配置正在开发中，将包含 Next.js + FastAPI + Meilisearch 一键部署。
+详见 [部署文档](https://lobeam.docs.vesper36.cc/deployment/)
 
 ## Tech Stack
 
@@ -148,12 +123,13 @@ Docker Compose 配置正在开发中，将包含 Next.js + FastAPI + Meilisearch
 |------|------|
 | 框架 | Next.js 16 (App Router) |
 | UI | React 19 + Tailwind CSS 4 |
-| 组件 | Radix UI |
+| 组件库 | Radix UI |
+| 编辑器 | CodeMirror 6 |
 | 状态管理 | Zustand + TanStack Query |
 | 动画 | Framer Motion |
 | 数据库 | SQLite (better-sqlite3) |
 | ORM | Drizzle ORM |
-| 搜索 | Meilisearch |
+| 认证 | jose (JWT) + bcryptjs |
 | 表单 | React Hook Form + Zod |
 | Markdown | remark + rehype + Shiki |
 | 图标 | Lucide React |
@@ -163,48 +139,41 @@ Docker Compose 配置正在开发中，将包含 Next.js + FastAPI + Meilisearch
 ```
 NovelStack/
 ├── src/
-│   ├── app/              # Next.js App Router 页面
-│   │   ├── creator/      # 创作者中心
-│   │   ├── works/        # 作品页面
-│   │   └── api/          # API 路由
-│   ├── components/       # React 组件
-│   │   ├── ui/           # 基础 UI 组件
-│   │   ├── layout/       # 布局组件
-│   │   └── ...           # 业务组件
+│   ├── app/              # Next.js App Router (12 页面 + 21 API)
+│   ├── components/       # React 组件 (14 个)
 │   └── lib/              # 核心库
-│       ├── config/       # 配置
-│       ├── db/           # 数据库 (Drizzle ORM)
-│       ├── hooks/        # 自定义 Hooks
-│       ├── mdx/          # MDX 处理
-│       ├── stores/       # Zustand Store
-│       ├── types/        # TypeScript 类型
-│       ├── utils/        # 工具函数
-│       └── validators/   # Zod 验证
-├── public/               # 静态资源
+│       ├── auth/         # JWT 认证 + RBAC 权限
+│       ├── config/       # 全局配置
+│       ├── db/           # Drizzle ORM (16 张表)
+│       ├── mdx/          # MDX 处理流水线
+│       └── stores/       # Zustand Store (7 个)
+├── docs/                 # VitePress 文档
 ├── data/                 # SQLite 数据库 (git 忽略)
-└── scripts/              # 工具脚本
+└── ecosystem.config.cjs  # PM2 部署配置
 ```
 
 ## Roadmap
 
-- [x] 项目基础架构搭建
+- [x] 项目基础架构
 - [x] UI 组件库 (Radix + Tailwind)
-- [x] 多主题系统
-- [x] 作品 CRUD
-- [x] 章节编辑器 (Markdown)
-- [x] 阅读器 (自定义设置)
-- [ ] 用户认证系统
+- [x] 六款主题系统
+- [x] 作品 CRUD + 卷章结构
+- [x] CodeMirror MDX 编辑器
+- [x] 双轨草稿系统 (本地 + 云端)
+- [x] 阅读器 (主题/字号/进度/TOC)
+- [x] JWT 认证 + RBAC 权限
+- [x] 评论系统 API
+- [x] 收藏系统 API
+- [x] 内容举报 API
+- [x] 自动部署 (Webhook + PM2)
+- [ ] 管理员面板 UI
 - [ ] Meilisearch 全文搜索集成
-- [ ] FastAPI 后端 API
-- [ ] 标签与分类系统
-- [ ] 评论与互动
-- [ ] 数据统计面板
+- [ ] 拖拽排序卷章
+- [ ] 内容警告 UI
+- [ ] 用户个人主页
+- [ ] RSS 输出
 - [ ] Docker Compose 部署
 - [ ] 国际化 (i18n)
-
-## Contributing
-
-欢迎贡献! 请先阅读 [CONTRIBUTING.md](CONTRIBUTING.md) 了解贡献流程。
 
 ## License
 
