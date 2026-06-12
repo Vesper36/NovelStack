@@ -30,10 +30,17 @@ export const metadata: Metadata = {
   },
   description: '一个面向创作者与读者的结构化叙事平台，为长篇连载、同人衍生、互动实验型文本提供容器级支持。',
   keywords: ['同人', '小说', '创作', '连载', '文学', 'fanfiction', 'writing'],
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:50040'),
   openGraph: {
     type: 'website',
     locale: 'zh_CN',
     siteName: 'InkWeave',
+  },
+  icons: {
+    icon: '/favicon.ico',
+  },
+  other: {
+    'theme-color': '#fbfaf7',
   },
 };
 
@@ -41,6 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="zh-CN"
+      suppressHydrationWarning
       className={`${notoSerif.variable} ${notoSans.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans bg-[var(--bg-primary)] text-[var(--text-primary)]">

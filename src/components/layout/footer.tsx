@@ -24,7 +24,7 @@ export function Footer() {
           </div>
 
           {/* Links */}
-          <div>
+          <nav aria-label="页脚导航">
             <h3 className="text-sm font-semibold uppercase tracking-wider text-[var(--text-primary)]">
               链接
             </h3>
@@ -62,7 +62,7 @@ export function Footer() {
                 </Link>
               </li>
             </ul>
-          </div>
+          </nav>
 
           {/* Contact */}
           <div>

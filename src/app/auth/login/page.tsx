@@ -1,7 +1,14 @@
+import type { Metadata } from 'next';
+import Link from 'next/link';
 import { LoginForm } from '@/components/auth/login-form';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { ThemeProvider } from '@/components/common/theme-provider';
+
+export const metadata: Metadata = {
+  title: '登录',
+  description: '登录你的 InkWeave 账号，开始创作或阅读。',
+};
 
 export default function LoginPage() {
   return (
@@ -18,6 +25,12 @@ export default function LoginPage() {
           <div className="rounded-xl border border-[var(--border)] bg-[var(--bg-primary)] p-6 shadow-sm">
             <LoginForm />
           </div>
+          <p className="mt-4 text-center text-sm text-[var(--text-secondary)]">
+            还没有账号？{' '}
+            <Link href="/auth/register" className="font-medium text-[var(--accent)] hover:underline">
+              立即注册
+            </Link>
+          </p>
         </div>
       </main>
       <Footer />

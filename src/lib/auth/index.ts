@@ -2,9 +2,17 @@ import { SignJWT, jwtVerify } from 'jose';
 import bcrypt from 'bcryptjs';
 import { cookies } from 'next/headers';
 
-const JWT_SECRET = new TextEncoder().encode(
-  process.env.JWT_SECRET || 'inkweave-default-secret-change-in-production'
-);
+const _getSecret = () => {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error('FATAL: JWT_SECRET environment variable is required in production');
+    }
+    return 'inkweave-dev-secret-not-for-production';
+  }
+  return secret;
+};
+const JWT_SECRET = new TextEncoder().encode(_getSecret());
 
 const COOKIE_NAME = 'inkweave-token';
 const TOKEN_EXPIRY = '7d';

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { BookOpen, Search, PenTool, Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -18,6 +18,20 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
 
+  const handleEscape = useCallback((e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      setSearchOpen(false);
+      setMobileOpen(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [handleEscape]);
+
+  const isActive = (href: string) => pathname === href || (href !== '/' && pathname.startsWith(href));
+
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--bg-primary)]/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -29,14 +43,14 @@ export function Header() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-1">
+        <nav className="hidden md:flex items-center gap-1" aria-label="主导航">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               className={cn(
                 'px-4 py-2 rounded-lg text-sm font-medium transition-colors',
-                pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href))
+                isActive(link.href)
                   ? 'bg-[var(--accent)]/10 text-[var(--accent)]'
                   : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-secondary)]'
               )}
@@ -52,6 +66,7 @@ export function Header() {
             onClick={() => setSearchOpen(!searchOpen)}
             className="flex h-9 w-9 items-center justify-center rounded-lg text-[var(--text-secondary)] transition-colors hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)]"
             aria-label="搜索"
+            aria-expanded={searchOpen}
           >
             <Search className="h-4 w-4" />
           </button>
@@ -66,6 +81,7 @@ export function Header() {
             onClick={() => setMobileOpen(!mobileOpen)}
             className="flex h-9 w-9 items-center justify-center rounded-lg text-[var(--text-secondary)] md:hidden"
             aria-label="菜单"
+            aria-expanded={mobileOpen}
           >
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -76,7 +92,9 @@ export function Header() {
       {searchOpen && (
         <div className="border-t border-[var(--border)] bg-[var(--bg-primary)] px-4 py-3">
           <form action="/works" method="get" className="mx-auto max-w-2xl">
+            <label htmlFor="header-search" className="sr-only">搜索作品、标签、作者</label>
             <input
+              id="header-search"
               type="text"
               name="q"
               placeholder="搜索作品、标签、作者..."
@@ -90,7 +108,7 @@ export function Header() {
       {/* Mobile Nav */}
       {mobileOpen && (
         <div className="border-t border-[var(--border)] bg-[var(--bg-primary)] px-4 py-3 md:hidden">
-          <nav className="flex flex-col gap-1">
+          <nav className="flex flex-col gap-1" aria-label="移动端导航">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -98,7 +116,7 @@ export function Header() {
                 onClick={() => setMobileOpen(false)}
                 className={cn(
                   'rounded-lg px-4 py-2.5 text-sm font-medium transition-colors',
-                  pathname === link.href
+                  isActive(link.href)
                     ? 'bg-[var(--accent)]/10 text-[var(--accent)]'
                     : 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)]'
                 )}
