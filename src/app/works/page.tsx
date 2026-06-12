@@ -28,7 +28,7 @@ export default async function WorksPage({
 
   const [works, total, allTags] = await Promise.all([
     getPublishedWorks({ limit, offset, sortBy, tag: tag || undefined }),
-    getPublishedWorksCount(),
+    getPublishedWorksCount({ tag: tag || undefined }),
     getAllTags(),
   ]);
 

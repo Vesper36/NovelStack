@@ -14,7 +14,7 @@ export async function getPublishedWorks(options?: {
   category?: string;
   sortBy?: 'latest' | 'popular' | 'word_count';
 }) {
-  const { limit = 20, offset = 0, sortBy = 'latest' } = options || {};
+  const { limit = 20, offset = 0, sortBy = 'latest', tag, category } = options || {};
 
   const orderByClause = sortBy === 'popular'
     ? desc(works.viewCount)
@@ -22,29 +22,46 @@ export async function getPublishedWorks(options?: {
       ? desc(works.wordCount)
       : desc(works.updatedAt);
 
-  const result = await db
-    .select({
-      id: works.id,
-      title: works.title,
-      slug: works.slug,
-      description: works.description,
-      coverUrl: works.coverUrl,
-      category: works.category,
-      wordCount: works.wordCount,
-      viewCount: works.viewCount,
-      favoriteCount: works.favoriteCount,
-      rating: works.rating,
-      status: works.status,
-      updatedAt: works.updatedAt,
-      authorName: users.name,
-      authorId: users.id,
-    })
-    .from(works)
-    .leftJoin(users, eq(works.authorId, users.id))
-    .where(eq(works.status, 'published'))
-    .orderBy(orderByClause)
-    .limit(limit)
-    .offset(offset);
+  const baseSelection = {
+    id: works.id,
+    title: works.title,
+    slug: works.slug,
+    description: works.description,
+    coverUrl: works.coverUrl,
+    category: works.category,
+    wordCount: works.wordCount,
+    viewCount: works.viewCount,
+    favoriteCount: works.favoriteCount,
+    rating: works.rating,
+    status: works.status,
+    updatedAt: works.updatedAt,
+    authorName: users.name,
+    authorId: users.id,
+  };
+
+  const whereClause = category
+    ? and(eq(works.status, 'published'), eq(works.category, category))
+    : eq(works.status, 'published');
+
+  const result = tag
+    ? await db
+        .select(baseSelection)
+        .from(works)
+        .leftJoin(users, eq(works.authorId, users.id))
+        .innerJoin(workTags, eq(workTags.workId, works.id))
+        .innerJoin(tags, eq(workTags.tagId, tags.id))
+        .where(and(whereClause, eq(tags.slug, tag)))
+        .orderBy(orderByClause)
+        .limit(limit)
+        .offset(offset)
+    : await db
+        .select(baseSelection)
+        .from(works)
+        .leftJoin(users, eq(works.authorId, users.id))
+        .where(whereClause)
+        .orderBy(orderByClause)
+        .limit(limit)
+        .offset(offset);
 
   // 获取每个作品的标签
   const workIds = result.map(w => w.id);
@@ -73,11 +90,23 @@ export async function getPublishedWorks(options?: {
 }
 
 /** 获取作品总数 */
-export async function getPublishedWorksCount() {
-  const [result] = await db
-    .select({ count: count() })
-    .from(works)
-    .where(eq(works.status, 'published'));
+export async function getPublishedWorksCount(options?: { tag?: string; category?: string }) {
+  const { tag, category } = options || {};
+  const whereClause = category
+    ? and(eq(works.status, 'published'), eq(works.category, category))
+    : eq(works.status, 'published');
+
+  const [result] = tag
+    ? await db
+        .select({ count: count() })
+        .from(works)
+        .innerJoin(workTags, eq(workTags.workId, works.id))
+        .innerJoin(tags, eq(workTags.tagId, tags.id))
+        .where(and(whereClause, eq(tags.slug, tag)))
+    : await db
+        .select({ count: count() })
+        .from(works)
+        .where(whereClause);
   return result?.count ?? 0;
 }
 

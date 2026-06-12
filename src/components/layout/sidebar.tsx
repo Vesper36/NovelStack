@@ -16,7 +16,7 @@ import { cn } from '@/lib/utils';
 
 const sidebarNavItems = [
   {
-    href: '/creator/dashboard',
+    href: '/creator',
     label: '仪表盘',
     icon: LayoutDashboard,
   },
@@ -30,11 +30,6 @@ const sidebarNavItems = [
     label: '新建作品',
     icon: PlusCircle,
   },
-  {
-    href: '/creator/settings',
-    label: '设置',
-    icon: Settings,
-  },
 ];
 
 export function Sidebar() {
@@ -43,7 +38,7 @@ export function Sidebar() {
   const [isMobileOpen, setIsMobileOpen] = React.useState(false);
 
   const isActive = (href: string) => {
-    if (href === '/creator/dashboard') {
+    if (href === '/creator') {
       return pathname === href;
     }
     return pathname.startsWith(href);
@@ -59,8 +54,8 @@ export function Sidebar() {
           className={cn(
             'flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors',
             isActive(item.href)
-              ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300'
-              : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white'
+              ? 'bg-[var(--accent)]/10 text-[var(--accent)]'
+              : 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)]'
           )}
           title={isCollapsed ? item.label : undefined}
         >
@@ -103,9 +98,13 @@ export function Sidebar() {
       {/* Mobile Drawer */}
       <aside
         className={cn(
-          'fixed left-0 top-16 z-30 h-[calc(100vh-4rem)] w-60 border-r border-gray-200 bg-white transition-transform duration-200 dark:border-gray-800 dark:bg-gray-950 lg:hidden',
+          'fixed left-0 top-16 z-30 h-[calc(100vh-4rem)] w-60 border-r transition-transform duration-200 lg:hidden',
           isMobileOpen ? 'translate-x-0' : '-translate-x-full'
         )}
+        style={{
+          borderColor: 'var(--border)',
+          backgroundColor: 'var(--bg-primary)',
+        }}
       >
         <div className="flex h-full flex-col">
           {navContent}
@@ -115,9 +114,13 @@ export function Sidebar() {
       {/* Desktop Sidebar */}
       <aside
         className={cn(
-          'sticky top-16 hidden h-[calc(100vh-4rem)] shrink-0 border-r border-gray-200 bg-white transition-all duration-200 dark:border-gray-800 dark:bg-gray-950 lg:block',
+          'sticky top-16 hidden h-[calc(100vh-4rem)] shrink-0 border-r transition-all duration-200 lg:block',
           isCollapsed ? 'w-16' : 'w-56'
         )}
+        style={{
+          borderColor: 'var(--border)',
+          backgroundColor: 'var(--bg-primary)',
+        }}
       >
         <div className="flex h-full flex-col">
           <div className="flex items-center justify-end px-2 pt-2">

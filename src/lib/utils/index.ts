@@ -54,11 +54,13 @@ export function estimateReadingTime(text: string): number {
 
 // 生成 slug
 export function generateSlug(text: string): string {
-  return text
+  const slug = text
     .toLowerCase()
     .trim()
-    .replace(/[\s\W-]+/g, '-')
+    .replace(/[^\p{Letter}\p{Number}]+/gu, '-')
     .replace(/^-+|-+$/g, '');
+
+  return slug || `work-${Date.now().toString(36)}`;
 }
 
 // 截断文本
