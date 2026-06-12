@@ -1,6 +1,6 @@
 # SSL 证书配置
 
-使用 Let's Encrypt 免费证书为你的 NovelStack 站点配置 HTTPS。
+使用 Let's Encrypt 免费证书为你的 InkWeave 站点配置 HTTPS。
 
 ## 使用 Certbot
 

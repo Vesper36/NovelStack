@@ -63,8 +63,10 @@ npm run dev
 |------|------|
 | `npm run dev` | 启动开发服务器 (端口 50040) |
 | `npm run build` | 构建生产版本 |
-| `npm run start` | 启动生产服务器 |
+| `npm run start` | 启动生产服务器 (端口 50040) |
 | `npm run lint` | 运行 ESLint 检查 |
+| `npm run db:push` | 推送数据库 schema 变更 |
+| `npm run db:studio` | 启动 Drizzle Studio 可视化数据库 |
 
 ## 端口规划
 
